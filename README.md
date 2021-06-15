@@ -34,9 +34,10 @@ The reason we have to write in 4 byte chunks, is that there is no method to writ
 
 Parsing the response is much simpler. Here’s how the response is formatted:
 
+```
 Offset  Size            Name            Value
 0       32-bit integer  action          0 // connect
 4       32-bit integer  transaction_id
 8       64-bit integer  connection_id
 16
-
+```
