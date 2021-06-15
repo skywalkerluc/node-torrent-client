@@ -67,4 +67,10 @@ const buildAnnouncement = (connectionId) => {
 
 module.exports = {
   getPeers,
+  udpSend,
+  parseAnnounceResponse,
+  responseType,
+  buildConnection,
+  parseConnectionResponse,
+  buildAnnouncement
 }
