@@ -7,7 +7,6 @@ const getPeers = (torrent, callback) => {
   const socket = dgram.createSocket('udp4');
   const url = URL(torrent.announce.toString('utf-8'));
 
-
   udpSend(socket, buildConnection(), url);
 
   socket.on('message', response => {
@@ -26,7 +25,7 @@ const getPeers = (torrent, callback) => {
 
 const udpSend = (udpRequest, callback = () => {}) => {
   const { socket, message, rawUrl } = udpRequest;
-  const url = URL(rawUrl);
+  const url = new URL(rawUrl);
   socket.send(message, 0, message.length, url.port, url.host, callback);
 }
 
@@ -54,10 +53,14 @@ const buildConnection = () => {
 }
 
 const parseConnectionResponse = (response) => {
-  return {
-    action: response.readUInt32BE(0),
-    transactionId: response.readUInt32BE(4),
-    connectionId: response.slice(8)
+  try {
+    return {
+      action: response.readUInt32BE(0),
+      transactionId: response.readUInt32BE(4),
+      connectionId: response.slice(8)
+    }
+  } catch (error) {
+    return false;
   }
 }
 
