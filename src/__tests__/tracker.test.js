@@ -40,7 +40,7 @@ test('udpSend should call socket.send ', () => {
     rawUrl: faker.internet.url()
   };
 
-  tracker.udpSend(mockRequest, () => {});
+  tracker.udpSend(mockRequest.socket, mockRequest.message, mockRequest.rawUrl, () => {});
 
   expect(mockRequest.socket.send).toHaveBeenCalled();
 });
