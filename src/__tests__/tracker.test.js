@@ -43,5 +43,39 @@ describe('udpSend scenarios', () => {
     tracker.udpSend(mockRequest.socket, mockRequest.message, mockRequest.rawUrl, () => {});
 
     expect(mockRequest.socket.send).toHaveBeenCalled();
+    // expect(mockRequest.socket.send).toHaveBeenCalledWith();
+  });
+});
+
+describe('Build connection', () => {
+  test('should return a 16-length buffer', () => {
+    const result = tracker.buildConnection();
+    expect(result.length).toEqual(16);
+    expect(result).toBeInstanceOf(Buffer);
+  });
+});
+
+describe('Response Type', () => {
+  test('should return connect if action has value 0', () => {
+    const buff = buffer.alloc(16);
+    const result = tracker.responseType(buff);
+
+    expect(result).toEqual('connect');
+  });
+
+  test('should return announce if action has value 1', () => {
+    const buff = buffer.alloc(16);
+    buff.writeUInt32BE(1, 0);
+    const result = tracker.responseType(buff);
+
+    expect(result).toEqual('announce');
+  });
+
+  test('should return undefined if action has value different from 0 or 1', () => {
+    const buff = buffer.alloc(16);
+    buff.writeUInt32BE(9, 0);
+    const result = tracker.responseType(buff);
+
+    expect(result).toBeUndefined();
   });
 });
