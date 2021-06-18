@@ -79,3 +79,17 @@ describe('Response Type', () => {
     expect(result).toBeUndefined();
   });
 });
+
+describe('Build announcement', () => {
+  jest.spyOn(global.console, 'log')
+
+  test('should console.log when an error occurs', () => {
+    const connectionId = 3343;
+    const torrent = { foo: 'bar' };
+    const port = 6881;
+
+    const result = tracker.buildAnnouncement(connectionId, torrent, port);
+
+    expect(console.log).toHaveBeenCalled();
+  });
+});

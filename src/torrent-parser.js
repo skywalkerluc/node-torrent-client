@@ -1,5 +1,6 @@
 const fs = require('fs');
 const bignum = require('bignum');
+const crypto = require('crypto');
 const { decode } = require('bencode');
 
 const open = (filepath) => {

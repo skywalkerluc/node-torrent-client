@@ -66,26 +66,28 @@ const parseConnectionResponse = (response) => {
 const buildAnnouncement = (connectionId, torrent, port=6881) => {
   const buff = Buffer.allocUnsafe(98);
 
-  // mounting announce req
-  connectionId.copy(buff, 0);
-  buff.writeUInt32BE(1, 8);
-  crypto.randomBytes(4).copy(buff, 12); // transactionId
-  torrentParser.infoHash(torrent).copy(buff, 16);
-  generateId().copy(buff, 36); // peer id
-  Buffer.alloc(8).copy(buff, 56);
-  torrentParser.size(torrent).copy(buff, 64);
-  Buffer.alloc(8).copy(buff, 72);
-  buff.writeUInt32BE(0, 80); // event
-  buff.writeUInt32BE(0, 80);
-  crypto.randomBytes(4).copy(buf, 88); // key
-  buff.writeInt32BE(-1, 92);
-  buff.writeUInt16BE(port, 96); // port gotta be between 6881 and 6889
-
+  try {
+    // mounting announce req
+    connectionId.copy(buff, 0);
+    buff.writeUInt32BE(1, 8);
+    crypto.randomBytes(4).copy(buff, 12); // transactionId
+    torrentParser.infoHash(torrent).copy(buff, 16);
+    generateId().copy(buff, 36); // peer id
+    Buffer.alloc(8).copy(buff, 56);
+    torrentParser.size(torrent).copy(buff, 64);
+    Buffer.alloc(8).copy(buff, 72);
+    buff.writeUInt32BE(0, 80); // event
+    buff.writeUInt32BE(0, 80);
+    crypto.randomBytes(4).copy(buf, 88); // key
+    buff.writeInt32BE(-1, 92);
+    buff.writeUInt16BE(port, 96); // port gotta be between 6881 and 6889
+  } catch (error) {
+    console.log(error);
+  }
   return buff;
 }
 
 const parseAnnounceResponse = (response) => {
-  console.log(response, 'announce response');
   const group = (iterable, groupSize) => {
     let groups = [];
     for (let i = 0; i < iterable.length; i += groupSize) {
