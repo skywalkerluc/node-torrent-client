@@ -70,6 +70,7 @@ Offset  Size    Name    Value
 Buffer.alloc(size, fill, encoding) -> returns a new initialized Buffer of the specified size. This method is slower than Buffer.allocUnsafe(size) but guarantees that newly created Buffer instances never contain old data that is potentially sensitive.
 
 ### Parsing announcement response
+```
 Offset      Size            Name            Value
 0           32-bit integer  action          1 // announce
 4           32-bit integer  transaction_id
@@ -79,4 +80,4 @@ Offset      Size            Name            Value
 20 + 6 * n  32-bit integer  IP address
 24 + 6 * n  16-bit integer  TCP port
 20 + 6 * N
-
+```
