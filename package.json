@@ -8,7 +8,8 @@
     "start": "node src/index.js",
     "test": "jest -i --colors --verbose --detectOpenHandles",
     "test:watch": "jest -i --watchAll",
-    "coverage": "jest -i --coverage"
+    "coverage": "jest -i --coverage",
+    "analyze": "./node_modules/.bin/es6-plato -r -d ./report src"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +20,7 @@
     "buffer": "^6.0.3",
     "crypto": "^1.0.1",
     "dgram": "^1.0.1",
+    "es6-plato": "^1.2.3",
     "nodemon": "^2.0.7",
     "url": "^0.11.0"
   },
