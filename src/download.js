@@ -15,7 +15,26 @@ const download = peer => {
     // socket.write(...)
   });
 
-  socket.on('data', data => {
-    // handle response here
+  onWholeMessage(socket, data => {
+    // handle response
+  });
+}
+
+const onWholeMessage = (socket, callback) => {
+  let savedBuffer = Buffer.alloc(0);
+  let handshake = true;
+
+  socket.on('data', receivedBuffer => {
+    const msgLength = () => handshake ?
+      savedBuffer.readUInt8(0) + 49 :
+      savedBuffer.readUInt32BE(0) + 4;
+
+    savedBuffer = Buffer.concat([savedBuffer, receivedBuffer]);
+
+    while(savedBuffer.length >= 4 && savedBuffer.length >= msgLength()){
+      callback(savedBuffer.slice(0, msgLength()));
+      savedBuffer = savedBuffer.slice(msgLength());
+      handshake = false;
+    }
   });
 }
