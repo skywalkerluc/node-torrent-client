@@ -21,7 +21,7 @@
     "crypto": "^1.0.1",
     "dgram": "^1.0.1",
     "es6-plato": "^1.2.3",
-    "nodemon": "^2.0.7",
+    "nodemon": "^2.0.20",
     "url": "^0.11.0"
   },
   "devDependencies": {
